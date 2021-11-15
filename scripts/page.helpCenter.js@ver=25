@@ -1,0 +1,45 @@
+$(document).ready(function () {
+var answer;
+    $(".question-item__title").click(function () {
+        if ($(this).parents(".question-item").hasClass("open")) {
+            answer = $(".question-item.open").find(".question-item__answer");
+            $(".question-item.open").removeClass("open");
+            answer.slideUp();
+        } else {
+            answer = $(".question-item.open").find(".question-item__answer");
+            $(".question-item.open").removeClass("open");
+            answer.slideUp();
+            $(this).parents(".question-item").addClass("open");
+            $(".question-item.open").find(".question-item__answer").slideDown();
+        }
+    })
+
+
+    $(".question-categories li").click(function () {
+        var $category = $(this).attr('id');
+        $(".question-categories li").removeClass("active");
+        $(this).addClass("active");
+        if ($category == "cat-general") {
+            loadCategory($("#general"));
+        } else if ($category == "cat-account") {
+            loadCategory($("#account"));
+        } else if ($category == "cat-tfa") {
+            loadCategory($("#tfa"));
+        } else if ($category == "cat-invest") {
+            loadCategory($("#invest"));
+        } else if ($category == "cat-withdraw") {
+            loadCategory($("#withdraw"));
+        } else if ($category == "cat-referral") {
+            loadCategory($("#referral"));
+        }
+    });
+
+    function loadCategory(category) {
+        $(".question-cat-content").find(".active:first").fadeOut(function () {
+            $(".question-cat-content").find(".active:first").removeClass("active");
+            category.fadeIn();
+            category.addClass("active");
+        });
+    }
+
+})

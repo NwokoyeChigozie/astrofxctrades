@@ -1,0 +1,69 @@
+
+$(document).ready(function(){
+    makeInvestFocus()
+    var depositAmount = $("#txtAmount").val();
+
+    $("#txtAmount").bind("keyup blur", function() {
+        depositAmount = $(this).val();
+        DoCalculate();
+    })
+
+    $(".planRadio").bind("change", function() {
+        DoCalculate();
+    })
+
+    $("body").on("click touchend", function(e) {
+        var $tgt = $(e.target);
+        if ($tgt.is("#investDropDown")) {
+          $(".calculateMakeInvest__type").addClass("active");
+        } else {
+          $(".calculateMakeInvest__type").removeClass("active");
+        }
+    })
+    
+    $("#directInvest").click(function() {
+        $("#depositIframe").contents().find("#process_48").prop("checked", true);
+        submitInvestForm();
+    })
+
+    $("#balanceInvest").click(function() {
+        $("#depositIframe").contents().find("#account_48").prop("checked", true);
+        submitInvestForm();
+    })
+
+    $(".make-invest-focus").click(function() {
+        setTimeout(function(){
+            makeInvestFocus();
+        }, 300)
+    });
+    
+    $(".invest-dark-bg").click(function() {
+        makeInvestClose()
+    })
+
+    function makeInvestFocus() {
+        if ( document.location.href.indexOf('#invest') > -1 ) {
+            $(".invest-dark-bg").fadeIn();
+            $('html, body').animate({scrollTop: $(".make-invest").offset().top - 50}, 500);
+        }
+    }
+    
+    function makeInvestClose() {
+        $(".invest-dark-bg").fadeOut();
+    }
+
+    function submitInvestForm() {
+        modalName = "deposit-modal";
+        openModal(modalName);
+        $("#depositIframe").contents().find("#depositAmount").val(depositAmount);
+        if($("#dailyPlan").is(":checked")) {
+            $("#depositIframe").contents().find("#plan_4").prop("checked", true);
+        } else if($("#totalPlan").is(":checked")) {
+            $("#depositIframe").contents().find("#plan_5").prop("checked", true);
+        }
+        setTimeout(function() {
+            $("#depositIframe").contents().find("form").submit();
+        },1000)
+    }
+})
+

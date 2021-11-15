@@ -1,0 +1,58 @@
+$(document).ready(function () {
+    $("#security-carousel").owlCarousel({
+        rtl: true,
+        center: true,
+        loop: true,
+        autoWidth: true,
+        items: 5,
+        autoplay: true,
+        dots: true,
+        onInitialized: resizeStage,
+        onRefresh: resizeStage
+    });
+
+    var drawTimeline = new TimelineMax()
+
+    drawTimeline
+        .fromTo("#screen", 1, {autoAlpha: 0,y: -100}, {autoAlpha: 1,y: 0,ease: Power1.easeInOut}, 1)
+        .fromTo("#bubbles", 1, {autoAlpha: 0,scale: 0.5,transformOrigin: "50% 50%"}, {autoAlpha: 1,scale: 1})
+        .fromTo(".line", 2.5, {drawSVG: "100% 100% "}, {drawSVG: "0% 100%",ease: Power0.easeNone}, 1)
+        .fromTo(".line1", 1, {drawSVG: "100% 100%"}, {drawSVG: "0% 100%"}, 1)
+        .fromTo(".line2", .7, {drawSVG: "0%"}, {drawSVG: "100%",ease: Power0.easeNone}, 2)
+        .fromTo(".line3", .5, {drawSVG: "0%"}, {drawSVG: "100%",ease: Power0.easeNone}, 2.7)
+        .fromTo("#blendedLines", 1, {autoAlpha: 0}, {autoAlpha: 1,ease: Power1.easeInOut}, 2.3)
+        .fromTo(".screen-circle", 1, {autoAlpha: 0}, {autoAlpha: 1}, 2.3)
+        .fromTo("#point", 1, {autoAlpha: 0}, {autoAlpha: 1}, 2.3)
+        .fromTo("#coin1", 2, {autoAlpha: 0,y: 100,x: -40}, {autoAlpha: 1,y: 0,x: 0,ease: Power1.easeOut}, 2.5)
+        .fromTo("#coin2", 2, {autoAlpha: 0,y: 100}, {autoAlpha: 1,y: 0,ease: Power1.easeOut}, 2.5)
+        .fromTo("#coin3", 2, {autoAlpha: 0,y: 40,x: 50}, {autoAlpha: 1,y: 0,x: 0,ease: Power1.easeOut}, 2.5)
+        .fromTo("#coin4", 2, {autoAlpha: 0,y: -40,x: -50}, {autoAlpha: 1,y: 0,x: 0,ease: Power1.easeOut}, 2.5)
+        .fromTo("#coin5", 2, {autoAlpha: 0,y: 40,x: 50}, {autoAlpha: 1,y: 0,x: 0,ease: Power1.easeOut}, 2.5);
+
+    var morphTl = new TimelineMax({repeat: -1,yoyo: true});
+    morphTl
+        .to("#bubble1-pos1", 6, {morphSVG: '#bubble1-pos2',ease: Power0.easeNone}, 0)
+        .to("#bubble1-pos1", 6, {morphSVG: '#bubble1-pos3',ease: Power0.easeNone}, 6)
+        .to("#bubble2-pos1", 6, {morphSVG: '#bubble2-pos2',ease: Power0.easeNone}, 0)
+        .to("#bubble2-pos1", 6, {morphSVG: '#bubble2-pos3',ease: Power0.easeNone}, 6)
+        .to("#bubble3-pos1", 6, {morphSVG: '#bubble3-pos2',ease: Power0.easeNone}, 0)
+        .to("#bubble3-pos1", 6, {morphSVG: '#bubble3-pos3',ease: Power0.easeNone}, 6)
+    var coinsControl = new ScrollMagic.Controller(),
+        coinScrollTimeline = new TimelineMax(),
+        scene = new ScrollMagic.Scene({offset: 100,duration: "100%",triggerHook: 1});
+    coinScrollTimeline
+        .to("#coin1", 15, {y: 200, transformOrigin:"50% 50%",rotation:25}, 1)
+        .to("#coin2", 10, {y: 150, transformOrigin:"50% 50%",rotation:15}, 1)
+        .to("#coin3", 25, {y: 160, transformOrigin:"50% 50%",rotation:30}, 1)
+        .to("#coin4", 9, {y: 120, transformOrigin:"50% 50%",rotation:60}, 1)
+        .to("#coin5", 11, {y: 250, transformOrigin:"50% 50%",rotation:90}, 1);
+
+    scene
+        .setTween(coinScrollTimeline)
+        .addTo(coinsControl);
+});
+
+function resizeStage() {
+    stage = $('.owl-stage');
+    stage.width(stage.width() * 2);
+}

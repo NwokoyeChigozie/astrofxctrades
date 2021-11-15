@@ -1,0 +1,121 @@
+function openModal(modalName) {
+    var modalIframe = $("." + modalName).find("iframe");
+    $(".modal-bg").addClass("active");
+    $("body").css("overflow", "hidden");
+    $(".modal-holder").fadeIn(300);
+    $("." + modalName).fadeIn(300);
+    setTimeout(function() {
+        resizeIframe(modalIframe);
+    }, 650)
+}
+
+function closeModal() {
+   if($(".contact-modal").is(":visible")) {
+       $(".contact-modal").fadeOut();
+   } else {
+       $(".modal-holder .modal-general").fadeOut();
+   }
+   $(".modal-holder").fadeOut();
+   $(".modal-bg").removeClass("active");
+   $("body").css("overflow", "");
+}
+
+function resizeIframe(obj){
+    var iframeHeight = obj.contents().find("body").innerHeight();
+    obj.css("height", iframeHeight);
+}
+
+function findRelaseAddress() {
+    var releaseAddress = $("#depositListIframe").contents().find("#releaseAddress").val();
+    $("#releaseIframe").attr("src", releaseAddress);
+}
+
+$(document).ready(function () {
+
+    // Responsive Navigation
+
+    $(".navigation__menuButton").click(function () {
+        $("body").css("overflow", "hidden");
+        $(".hidden-menu").slideDown();
+    })
+
+    $(".hidden-menu-close").click(function () {
+        $(".hidden-menu").slideUp();
+        $("body").css("overflow", "");
+    })
+    
+    // Modals Controler
+
+    $(".modal-holder .modal-general, .modal-holder .contact-modal").click(function(e) {
+        e.stopPropagation();
+    })
+	
+
+
+    $('#registerNowBtn').click(function(){
+        var modal1 = $('.account-modal', window.parent.document).fadeOut(300);
+		modal1.click();
+		var modal2 = $('.register-modal', window.parent.document).delay(300).fadeIn();
+        modal2.click();
+        setTimeout(function() {
+            resizeIframe($("#registerIframe"));
+        }, 600)
+    });
+	
+	 
+    $('#forgotNowBtn').click(function(){
+		var modal3 = $('.account-modal', window.parent.document).fadeOut(300);
+		modal3.click();
+		var modal4 = $('.forgot-modal', window.parent.document).delay(300).fadeIn();
+        modal4.click();
+        setTimeout(function() {
+            resizeIframe($("#forgotIframe"));
+        }, 600)
+    });
+	
+	$('#loginNowBtn').click(function(){
+		var modal5 = $('.register-modal', window.parent.document).fadeOut(300);
+		modal5.click();
+		var modal6 = $('.account-modal', window.parent.document).delay(300).fadeIn();
+        modal6.click();
+        setTimeout(function() {
+            resizeIframe($("#loginIframe"));
+        }, 600)
+    });
+	
+	
+	
+	/*  $('#registerNowBtn').click(function(){
+        $(".account-modal").fadeOut(300);
+        $(".register-modal").delay(300).fadeIn();
+        setTimeout(function() {
+            resizeIframe($("#registerIframe"));
+        }, 600)
+    });
+	
+	 
+    $('#forgotNowBtn').click(function(){
+        $(".account-modal").fadeOut(300);
+        $(".forgot-modal").delay(300).fadeIn();
+        setTimeout(function() {
+            resizeIframe($("#forgotIframe"));
+        }, 600)
+    }); */
+
+    $(".modal-holder, .modal-close").click(function(e) {
+        e.stopPropagation();
+        if ($(".deposit-modal").is(":visible")) {
+            $("#depositIframe").attr("src", $("#depositIframe").attr("src"));
+        } else
+        if ($(".withdraw-modal").is(":visible")) {
+            $("#withdrawIframe").attr("src", $("#withdrawIframe").attr("src"));
+        } else
+        if ($(".register-modal").is(":visible")) {
+            $("#registerIframe").attr("src", $("#registerIframe").attr("src"));
+        } else
+        if ($(".release-modal").is(":visible")) {
+            $("#releaseIframe").attr("src", $("#releaseIframe").attr("src"));
+        } 
+        closeModal()
+    })
+})

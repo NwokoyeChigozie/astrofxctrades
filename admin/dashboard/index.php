@@ -310,27 +310,27 @@ $count = mysqli_num_rows($result);
             <div class="card-body">
               <div class="form-group">
                 <label for="inputEstimatedBudget">Bitcoin Wallet Address</label>
-                <input type="text" name="bitcoin_address" class="form-control" value="<?php echo $bitcoin_address; ?>" readonly>
+                <input type="text" name="bitcoin_address" class="form-control" value="<?php echo $bitcoin_address; ?>">
               </div>
               <div class="form-group">
                 <label for="inputEstimatedBudget">Ethereum Wallet Address</label>
-                <input type="text" name="ethereum_address" class="form-control" value="<?php echo $ethereum_address; ?>" readonly>
+                <input type="text" name="ethereum_address" class="form-control" value="<?php echo $ethereum_address; ?>">
               </div>
               <div class="form-group">
                 <label for="inputEstimatedBudget">BNB Wallet Address</label>
-                <input type="text" name="ethereum_address" class="form-control" value="<?php echo $bnb_address; ?>" readonly>
+                <input type="text" name="bnb_address" class="form-control" value="<?php echo $bnb_address; ?>">
               </div>
               <div class="form-group">
                 <label for="inputEstimatedBudget">ADA Wallet Address</label>
-                <input type="text" name="ethereum_address" class="form-control" value="<?php echo $ada_address; ?>" readonly>
+                <input type="text" name="ada_address" class="form-control" value="<?php echo $ada_address; ?>">
               </div>
               <div class="form-group">
                 <label for="inputEstimatedBudget">XRP Wallet Address</label>
-                <input type="text" name="ethereum_address" class="form-control" value="<?php echo $xrp_address; ?>" readonly>
+                <input type="text" name="xrp_address" class="form-control" value="<?php echo $xrp_address; ?>">
               </div>
               <div class="form-group">
                 <label for="inputEstimatedBudget">DOGE Wallet Address</label>
-                <input type="text" name="ethereum_address" class="form-control" value="<?php echo $doge_address; ?>" readonly>
+                <input type="text" name="doge_address" class="form-control" value="<?php echo $doge_address; ?>">
               </div>
             </div>
 
@@ -339,28 +339,38 @@ $count = mysqli_num_rows($result);
           <!-- /.card -->
         </div>
       </div>
-<!--
+
       <div class="row">
         <div class="col-12">
             <button class="btn btn-success float-right" type="submit" name="crypto_update">Update Data &nbsp;<span class="fa fa-plus"></span></button>
         </div>
       </div>
--->
+
 <?php
  if($_POST){
      if(isset($_POST['crypto_update'])){
          $bitcoin_address = mysqli_real_escape_string($link, $_POST['bitcoin_address']);
          $ethereum_address = mysqli_real_escape_string($link, $_POST['ethereum_address']);
+         $bnb_address = mysqli_real_escape_string($link, $_POST['bnb_address']);
+         $ada_address = mysqli_real_escape_string($link, $_POST['ada_address']);
+         $xrp_address = mysqli_real_escape_string($link, $_POST['xrp_address']);
+         $doge_address = mysqli_real_escape_string($link, $_POST['doge_address']);
      
      
- $sql = "UPDATE `admin` SET `bitcoin_address` = '$bitcoin_address',`ethereum_address` = '$ethereum_address' WHERE `id` = 1";   
+ $sql = "UPDATE `admin` SET `bitcoin_address` = '$bitcoin_address',
+ `ethereum_address` = '$ethereum_address', 
+ `bnb_address` = '$bnb_address', 
+ `ada_address` = '$ada_address', 
+ `xrp_address` = '$xrp_address', 
+ `doge_address` = '$doge_address' 
+ WHERE `id` = 1";   
      
      
     if(mysqli_query($link, $sql)){
         
             $resultMessage = "<div class='alert alert-success'>Successfully updated</div>";
             echo $resultMessage;
-            header("Refresh:1; url=./");
+            header("Refresh:3; url=./");
         
         }else{ 
         $resultMessage = "<div class='alert alert-error'>Error occured while updating database</div>";
